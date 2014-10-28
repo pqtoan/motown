@@ -17,7 +17,7 @@ package io.motown.domain.api.chargingstation;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
-
+import static com.google.common.base.Objects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -85,5 +85,11 @@ public final class TextualToken implements IdentifyingToken {
         }
         final TextualToken other = (TextualToken) obj;
         return Objects.equals(this.token, other.token);
+    }
+    
+    public String toString() {
+        return "item{" +
+            "token='" + token + '\'' +
+            ", status='" + authenticationStatus + '\'' + '}';
     }
 }

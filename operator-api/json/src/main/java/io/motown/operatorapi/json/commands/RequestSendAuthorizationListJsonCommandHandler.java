@@ -19,11 +19,13 @@ import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import io.motown.domain.api.chargingstation.*;
+import io.motown.domain.api.security.Hashing256;
 import io.motown.domain.api.security.IdentityContext;
 import io.motown.operatorapi.json.exceptions.UserIdentityUnauthorizedException;
 import io.motown.operatorapi.viewmodel.model.SendAuthorizationListApiCommand;
 import io.motown.operatorapi.viewmodel.persistence.entities.ChargingStation;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Set;
 
 class RequestSendAuthorizationListJsonCommandHandler extends JsonCommandHandler {
@@ -40,6 +42,8 @@ class RequestSendAuthorizationListJsonCommandHandler extends JsonCommandHandler 
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws NoSuchAlgorithmException
      */
     @Override
     public void handle(String chargingStationId, JsonObject commandObject, IdentityContext identityContext) throws UserIdentityUnauthorizedException {
@@ -48,7 +52,11 @@ class RequestSendAuthorizationListJsonCommandHandler extends JsonCommandHandler 
         if (!commandAuthorizationService.isAuthorized(csId, identityContext.getUserIdentity(), RequestSendAuthorizationListCommand.class)) {
             throw new UserIdentityUnauthorizedException(chargingStationId, identityContext.getUserIdentity(), RequestSendAuthorizationListCommand.class);
         }
-
+        
+        /*
+         * The format of an authorizationList: 
+         *        [item{token=1,status=EXPIRED}, item{token=2, status=BLOCKED}, item{token=3, status=ACCEPTED}]
+         */
         try {
             Set<IdentifyingToken> authorizationList = Sets.newHashSet();
 
@@ -59,13 +67,19 @@ class RequestSendAuthorizationListJsonCommandHandler extends JsonCommandHandler 
             AuthorizationListUpdateType updateType = AuthorizationListUpdateType.valueOf(command.getUpdateType());
 
             ChargingStation chargingStation = repository.findOne(chargingStationId);
+
             if (chargingStation != null && chargingStation.communicationAllowed()) {
-                commandGateway.send(new RequestSendAuthorizationListCommand(csId, authorizationList, command.getListVersion(), "", updateType, identityContext), new CorrelationToken());
-            } else {
+                try {
+                    commandGateway.send(new RequestSendAuthorizationListCommand(csId, authorizationList, command.getListVersion(), new Hashing256().getHex(authorizationList.toString()), updateType, identityContext), new CorrelationToken());
+                } catch (NoSuchAlgorithmException ex) {
+                    throw new IllegalStateException("It is not a correct hashing algorithm");
+                }
+            } 
+            else {
                 throw new IllegalStateException("It is not possible to send a authorization list to a charging station that is not registered");
             }
         } catch (JsonSyntaxException ex) {
             throw new IllegalArgumentException("SendAuthorizationList command not able to parse the payload, is your json correctly formatted?", ex);
-        }
+        } 
     }
 }
