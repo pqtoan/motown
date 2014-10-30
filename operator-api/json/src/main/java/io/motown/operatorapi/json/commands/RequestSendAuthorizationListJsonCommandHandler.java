@@ -55,7 +55,8 @@ class RequestSendAuthorizationListJsonCommandHandler extends JsonCommandHandler 
         
         /*
          * The format of an authorizationList: 
-         *        [item{token=1,status=EXPIRED}, item{token=2, status=BLOCKED}, item{token=3, status=ACCEPTED}]
+         *        [item{token='1',status='EXPIRED'}, item{token='2', status='BLOCKED'}, item{token='3', status='ACCEPTED'}]
+         *        
          */
         try {
             Set<IdentifyingToken> authorizationList = Sets.newHashSet();
