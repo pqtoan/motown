@@ -246,6 +246,7 @@ public class MotownCentralSystemService implements io.motown.ocpp.v15.soap.centr
                 AuthorizeResponse response = new AuthorizeResponse();
                 IdTagInfo tagInfo = new IdTagInfo();
                 tagInfo.setStatus(AuthorizationStatus.INVALID);
+                tagInfo.setParentIdTag("value");
                 response.setIdTagInfo(tagInfo);
 
                 return response;

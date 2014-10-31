@@ -224,6 +224,7 @@ public class MotownCentralSystemService implements CentralSystemService {
                 StartTransactionResponse response = new StartTransactionResponse();
                 IdTagInfo tagInfo = new IdTagInfo();
                 tagInfo.setStatus(AuthorizationStatus.INVALID);
+                //tagInfo.setParentIdTag(value);
                 response.setIdTagInfo(tagInfo);
 
                 return response;
@@ -310,6 +311,8 @@ public class MotownCentralSystemService implements CentralSystemService {
             AuthorizeResponse response = new AuthorizeResponse();
             IdTagInfo tagInfo = new IdTagInfo();
             tagInfo.setStatus(convert(futureResponse.getStatus()));
+           // tagInfo.setParentIdTag(value);
+           // tagInfo.setExpiryDate(value);
             response.setIdTagInfo(tagInfo);
             return response;
         }
@@ -324,7 +327,7 @@ public class MotownCentralSystemService implements CentralSystemService {
 
             IdTagInfo idTagInfo = new IdTagInfo();
             idTagInfo.setStatus(convert(startTransactionFutureResult.getAuthorizationResultStatus()));
-
+            idTagInfo.setParentIdTag("value");
             StartTransactionResponse response = new StartTransactionResponse();
             response.setIdTagInfo(idTagInfo);
             response.setTransactionId(startTransactionFutureResult.getTransactionId());

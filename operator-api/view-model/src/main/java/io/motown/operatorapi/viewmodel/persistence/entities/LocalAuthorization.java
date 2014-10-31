@@ -22,14 +22,17 @@ import java.util.Objects;
 public class LocalAuthorization {
 
     private String token;
+    
+    private String parentToken;
 
     private io.motown.domain.api.chargingstation.IdentifyingToken.AuthenticationStatus authenticationStatus;
 
     public LocalAuthorization() {
     }
 
-    public LocalAuthorization(String token, io.motown.domain.api.chargingstation.IdentifyingToken.AuthenticationStatus authenticationStatus) {
+    public LocalAuthorization(String token,String parentToken, io.motown.domain.api.chargingstation.IdentifyingToken.AuthenticationStatus authenticationStatus) {
         this.token = token;
+        this.parentToken = parentToken;
         this.authenticationStatus = authenticationStatus;
     }
 
@@ -39,6 +42,14 @@ public class LocalAuthorization {
 
     public void setToken(String token) {
         this.token = token;
+    }
+    
+    public String getParentToken() {
+        return parentToken;
+    }
+
+    public void setParentToken(String Token) {
+        this.parentToken = parentToken;
     }
 
     public io.motown.domain.api.chargingstation.IdentifyingToken.AuthenticationStatus getAuthenticationStatus() {

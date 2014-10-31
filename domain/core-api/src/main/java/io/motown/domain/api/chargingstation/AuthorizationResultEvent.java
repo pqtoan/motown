@@ -35,19 +35,22 @@ public class AuthorizationResultEvent {
 
     private final IdentityContext identityContext;
 
+    private final IdentifyingToken parentIdentifyingToken;
     /**
      * Creates a {@code AuthorizationResultEvent} with an identifier, identifier and result status.
      *
      * @param chargingStationId         the identifier of the charging station.
      * @param identifyingToken          the identification that has been authorized.
      * @param authorizationResultStatus the status of authorization result.
+     * @param parentIdentifyingToken    the parentIdentification
      * @param identityContext           identity context.
      * @throws NullPointerException if {@code chargingStationId}, {@code idTag}, {@code authorizationResultStatus} or {@code identityContext} is {@code null}.
      */
-    public AuthorizationResultEvent(ChargingStationId chargingStationId, IdentifyingToken identifyingToken, AuthorizationResultStatus authorizationResultStatus, IdentityContext identityContext) {
+    public AuthorizationResultEvent(ChargingStationId chargingStationId, IdentifyingToken identifyingToken, AuthorizationResultStatus authorizationResultStatus, IdentifyingToken parentIdentifyingToken, IdentityContext identityContext) {
         this.chargingStationId = checkNotNull(chargingStationId);
         this.identifyingToken = checkNotNull(identifyingToken);
         this.authorizationResultStatus = checkNotNull(authorizationResultStatus);
+        this.parentIdentifyingToken = checkNotNull(parentIdentifyingToken);
         this.identityContext = checkNotNull(identityContext);
     }
 
@@ -79,6 +82,15 @@ public class AuthorizationResultEvent {
     }
 
     /**
+     * Gets the parentIdentification.
+     *
+     * @return the parentIdentification.
+     */
+    public IdentifyingToken getParentIdentifyingToken() {
+        return parentIdentifyingToken;
+    }
+    
+    /**
      * Gets the identity context.
      *
      * @return the identity context.
@@ -89,7 +101,7 @@ public class AuthorizationResultEvent {
 
     @Override
     public int hashCode() {
-        return Objects.hash(chargingStationId, identifyingToken, authorizationResultStatus, identityContext);
+        return Objects.hash(chargingStationId, identifyingToken, authorizationResultStatus, parentIdentifyingToken, identityContext);
     }
 
     @Override
@@ -101,7 +113,7 @@ public class AuthorizationResultEvent {
             return false;
         }
         final AuthorizationResultEvent other = (AuthorizationResultEvent) obj;
-        return Objects.equals(this.chargingStationId, other.chargingStationId) && Objects.equals(this.identifyingToken, other.identifyingToken) && Objects.equals(this.authorizationResultStatus, other.authorizationResultStatus) && Objects.equals(this.identityContext, other.identityContext);
+        return Objects.equals(this.chargingStationId, other.chargingStationId) && Objects.equals(this.identifyingToken, other.identifyingToken) && Objects.equals(this.authorizationResultStatus, other.authorizationResultStatus) && Objects.equals(this.parentIdentifyingToken, other.parentIdentifyingToken) && Objects.equals(this.identityContext, other.identityContext);
     }
 
     /**
@@ -113,6 +125,7 @@ public class AuthorizationResultEvent {
                 .add("chargingStationId", chargingStationId)
                 .add("identifyingToken", identifyingToken)
                 .add("authorizationResultStatus", authorizationResultStatus)
+                .add("parentIdentifyingToken",parentIdentifyingToken)
                 .add("identityContext", identityContext)
                 .toString();
     }
