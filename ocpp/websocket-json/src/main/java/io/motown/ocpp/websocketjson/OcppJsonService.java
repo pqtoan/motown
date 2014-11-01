@@ -180,7 +180,9 @@ public class OcppJsonService {
             localListEntry.setIdTag(token.getToken());
 
             IdTagInfo_ idTagInfo = new IdTagInfo_();
-            idTagInfo.setStatus(convertAuthenticationStatus(token.getAuthenticationStatus()));
+            idTagInfo.setParentIdTag(token.getIdTagInfo().getParentIdTag());
+            idTagInfo.setStatus(convertAuthenticationStatus(token.getIdTagInfo().getStatus()));
+            //idTagInfo.setStatus(convertAuthenticationStatus(token.getAuthenticationStatus()));
             localListEntry.setIdTagInfo(idTagInfo);
 
             localList.add(localListEntry);
@@ -199,14 +201,14 @@ public class OcppJsonService {
         sendWampMessage(wampMessage, chargingStationId);
     }
 
-    public void reserveNow(ChargingStationId chargingStationId, EvseId evseId, IdentifyingToken identifyingToken, IdentifyingToken parentIdentifyingToken, Date expiryDate, CorrelationToken correlationToken) {
+    public void reserveNow(ChargingStationId chargingStationId, EvseId evseId, String identifyingToken, String parentIdentifyingToken, Date expiryDate, CorrelationToken correlationToken) {
         NumberedReservationId reservationId = domainService.generateReservationIdentifier(chargingStationId, PROTOCOL_IDENTIFIER);
 
         Reservenow reserveNowRequest = new Reservenow();
         reserveNowRequest.setConnectorId(evseId.getNumberedId());
-        reserveNowRequest.setIdTag(identifyingToken.getToken());
+        reserveNowRequest.setIdTag(identifyingToken);
         if (parentIdentifyingToken != null) {
-            reserveNowRequest.setParentIdTag(parentIdentifyingToken.getToken());
+            reserveNowRequest.setParentIdTag(parentIdentifyingToken);
         }
         reserveNowRequest.setExpiryDate(expiryDate);
         reserveNowRequest.setReservationId(reservationId.getNumber());
@@ -235,7 +237,7 @@ public class OcppJsonService {
      * @param status the authentication status.
      * @return the OCPP/J status.
      */
-    private IdTagInfo_.Status convertAuthenticationStatus(IdentifyingToken.AuthenticationStatus status) {
+    private IdTagInfo_.Status convertAuthenticationStatus(MainIdTagInfo.AuthenticationStatus status) {
         IdTagInfo_.Status result;
         switch (status) {
             case ACCEPTED:

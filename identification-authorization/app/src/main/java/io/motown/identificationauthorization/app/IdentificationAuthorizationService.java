@@ -35,7 +35,7 @@ public class IdentificationAuthorizationService {
      * @param token identifying token to be validated.
      * @return true if one of the authentication providers indicates the identification is valid, otherwise false.
      */
-    public boolean isValid(IdentifyingToken token) {
+    public boolean isValid(String token) {
         boolean valid = false;
 
         for(AuthorizationProvider provider : providers) {

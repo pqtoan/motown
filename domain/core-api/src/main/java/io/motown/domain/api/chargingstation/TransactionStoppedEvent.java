@@ -32,7 +32,7 @@ public final class TransactionStoppedEvent {
 
     private final TransactionId transactionId;
 
-    private final IdentifyingToken identifyingToken;
+    private final String identifyingToken;
 
     private final int meterStop;
 
@@ -56,7 +56,7 @@ public final class TransactionStoppedEvent {
      * @throws NullPointerException if {@code chargingStationId}, {@code transactionId}, {@code identifyingToken},
      *                              {@code timestamp} or {@code identityContext} is {@code null}.
      */
-    public TransactionStoppedEvent(ChargingStationId chargingStationId, TransactionId transactionId, IdentifyingToken identifyingToken, int meterStop, Date timestamp, IdentityContext identityContext) {
+    public TransactionStoppedEvent(ChargingStationId chargingStationId, TransactionId transactionId, String identifyingToken, int meterStop, Date timestamp, IdentityContext identityContext) {
         this.chargingStationId = checkNotNull(chargingStationId);
         this.transactionId = checkNotNull(transactionId);
         this.identifyingToken = checkNotNull(identifyingToken);
@@ -88,7 +88,7 @@ public final class TransactionStoppedEvent {
      *
      * @return the token.
      */
-    public IdentifyingToken getIdTag() {
+    public String getIdTag() {
         return identifyingToken;
     }
 

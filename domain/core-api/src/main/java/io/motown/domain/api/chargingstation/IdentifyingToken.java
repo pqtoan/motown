@@ -24,21 +24,14 @@ package io.motown.domain.api.chargingstation;
  */
 public interface IdentifyingToken {
 
-    enum AuthenticationStatus {
-        ACCEPTED,
-        BLOCKED,
-        EXPIRED,
-        INVALID,
-        CONCURRENT_TX,
-        DELETED
-    }
-
     /**
      * Gets a unique textual representation of the token.
      *
      * @return the unique textual representation of the token.
      */
     String getToken();
+   
+    MainIdTagInfo getIdTagInfo();
+    
 
-    AuthenticationStatus getAuthenticationStatus();
 }

@@ -43,7 +43,7 @@ public class AuthorizationResult {
     public String getIdToken() {
         return idToken;
     }
-
+    
     public AuthorizationResultStatus getStatus() {
         return status;
     }

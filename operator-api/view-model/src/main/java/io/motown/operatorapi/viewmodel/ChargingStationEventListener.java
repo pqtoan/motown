@@ -243,8 +243,8 @@ public class ChargingStationEventListener {
         for (IdentifyingToken identifyingToken : identifyingTokens) {
             LocalAuthorization localAuthorization = new LocalAuthorization();
             localAuthorization.setToken(identifyingToken.getToken());
-            localAuthorization.setAuthenticationStatus(identifyingToken.getAuthenticationStatus());
-            localAuthorization.setParentToken(identifyingToken.getToken());?????
+            localAuthorization.setAuthenticationStatus(identifyingToken.getIdTagInfo().getStatus());
+            localAuthorization.setParentToken(identifyingToken.getIdTagInfo().getParentIdTag());
 
             localAuthorizations.add(localAuthorization);
         }

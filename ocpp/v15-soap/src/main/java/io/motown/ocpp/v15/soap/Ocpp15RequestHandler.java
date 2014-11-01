@@ -16,16 +16,20 @@
 package io.motown.ocpp.v15.soap;
 
 import com.google.common.collect.ImmutableSet;
+
 import io.motown.domain.api.chargingstation.*;
 import io.motown.domain.api.security.AddOnIdentity;
+import io.motown.domain.api.security.Hashing256;
 import io.motown.domain.api.security.TypeBasedAddOnIdentity;
 import io.motown.ocpp.viewmodel.OcppRequestHandler;
 import io.motown.ocpp.viewmodel.domain.DomainService;
 import io.motown.ocpp.viewmodel.ocpp.ChargingStationOcpp15Client;
+
 import org.axonframework.common.annotation.MetaData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 import java.util.Set;
 
@@ -251,19 +255,25 @@ public class Ocpp15RequestHandler implements OcppRequestHandler {
     @Override
     public void handle(SendAuthorizationListRequestedEvent event, CorrelationToken correlationToken) {
         LOG.info("SendAuthorizationListRequestedEvent");
-
-        RequestResult requestResult = chargingStationOcpp15Client.sendAuthorizationList(event.getChargingStationId(), event.getAuthorizationListHash(), event.getAuthorizationListVersion(), event.getAuthorizationList(), event.getUpdateType());
-
-        switch (requestResult) {
-            case SUCCESS:
-                domainService.authorizationListChange(event.getChargingStationId(), event.getAuthorizationListVersion(), event.getUpdateType(), event.getAuthorizationList(), correlationToken, addOnIdentity);
-                break;
-            case FAILURE:
-                LOG.info("Failed to send authorization list to charging station {}", event.getChargingStationId().getId());
-                break;
-            default:
-                throw new AssertionError(String.format("Unkown send authorization list response status: '%s'", requestResult));
-        }
+        
+        RequestResult requestResult;
+		try {
+			requestResult = chargingStationOcpp15Client.sendAuthorizationList(event.getChargingStationId(), new Hashing256().getHex(event.getAuthorizationList().toString()), event.getAuthorizationListVersion(), event.getAuthorizationList(), event.getUpdateType());
+		
+	        switch (requestResult) {
+	            case SUCCESS:
+	                domainService.authorizationListChange(event.getChargingStationId(), event.getAuthorizationListVersion(), event.getUpdateType(), event.getAuthorizationList(), correlationToken, addOnIdentity);
+	                break;
+	            case FAILURE:
+	                LOG.info("Failed to send authorization list to charging station {}", event.getChargingStationId().getId());
+	                break;
+	            default:
+	                throw new AssertionError(String.format("Unkown send authorization list response status: '%s'", requestResult));
+	        }
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     @Override

@@ -123,7 +123,7 @@ public class MotownCentralSystemService implements io.motown.ocpp.v15.soap.centr
 
         // In case the idTag is missing we create an empty token
         String idTag = request.getIdTag() != null ? request.getIdTag() : "";
-        IdentifyingToken identifyingToken = new TextualToken(idTag);
+       
 
         List<MeterValue> meterValues = new ArrayList<>();
         List<TransactionData> transactionData = request.getTransactionData();
@@ -141,7 +141,7 @@ public class MotownCentralSystemService implements io.motown.ocpp.v15.soap.centr
                 }
             }
         }
-        domainService.stopTransaction(chargingStationId, transactionId, identifyingToken, request.getMeterStop(), request.getTimestamp(), meterValues, addOnIdentity);
+        domainService.stopTransaction(chargingStationId, transactionId, idTag, request.getMeterStop(), request.getTimestamp(), meterValues, addOnIdentity);
         return new StopTransactionResponse();
     }
 
@@ -284,7 +284,7 @@ public class MotownCentralSystemService implements io.motown.ocpp.v15.soap.centr
                 putIfValueNotNull(AttributeMapKeys.RESERVATION_ID, parameters.getReservationId() != null ? parameters.getReservationId().toString() : null);
 
         StartTransactionInfo startTransactionInfo = new StartTransactionInfo(new EvseId(parameters.getConnectorId()),
-                parameters.getMeterStart(), parameters.getTimestamp(), new TextualToken(parameters.getIdTag()), attributes);
+                parameters.getMeterStart(), parameters.getTimestamp(), parameters.getIdTag(), attributes);
 
         final StartTransactionFutureEventCallback future = new StartTransactionFutureEventCallback(domainService,
                 chargingStationId, PROTOCOL_IDENTIFIER, startTransactionInfo, addOnIdentity);

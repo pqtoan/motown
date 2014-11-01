@@ -28,7 +28,7 @@ public final class RequestStartTransactionCommand {
     @TargetAggregateIdentifier
     private final ChargingStationId chargingStationId;
 
-    private final IdentifyingToken identifyingToken;
+    private final String identifyingToken;
 
     private final EvseId evseId;
 
@@ -43,7 +43,7 @@ public final class RequestStartTransactionCommand {
      * @param identityContext   the identity context.
      * @throws NullPointerException if {@code chargingStationId}, {@code identifyingToken}, {@code evseId} or {@code identityContext} is {@code null}.
      */
-    public RequestStartTransactionCommand(ChargingStationId chargingStationId, IdentifyingToken identifyingToken, EvseId evseId, IdentityContext identityContext) {
+    public RequestStartTransactionCommand(ChargingStationId chargingStationId, String identifyingToken, EvseId evseId, IdentityContext identityContext) {
         this.chargingStationId = checkNotNull(chargingStationId);
         this.identifyingToken = checkNotNull(identifyingToken);
         this.evseId = checkNotNull(evseId);
@@ -64,7 +64,7 @@ public final class RequestStartTransactionCommand {
      *
      * @return the token.
      */
-    public IdentifyingToken getIdentifyingToken() {
+    public String getIdentifyingToken() {
         return identifyingToken;
     }
 

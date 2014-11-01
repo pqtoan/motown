@@ -30,7 +30,7 @@ public class StartTransactionInfo {
 
     private final Date timestamp;
 
-    private final IdentifyingToken identifyingToken;
+    private final String identifyingToken;
 
     private final Map<String, String> attributes;
 
@@ -45,7 +45,7 @@ public class StartTransactionInfo {
      *                          the charging station when it booted but which are not required by Motown. Because
      *                          {@link java.util.Map} implementations are potentially mutable a defensive copy is made.
      */
-    public StartTransactionInfo(EvseId evseId, int meterStart, Date timestamp, IdentifyingToken identifyingToken, Map<String, String> attributes) {
+    public StartTransactionInfo(EvseId evseId, int meterStart, Date timestamp, String identifyingToken, Map<String, String> attributes) {
         this.evseId = checkNotNull(evseId);
         this.identifyingToken = checkNotNull(identifyingToken);
         this.meterStart = meterStart;
@@ -68,7 +68,7 @@ public class StartTransactionInfo {
      *
      * @return the token.
      */
-    public IdentifyingToken getIdentifyingToken() {
+    public String getIdentifyingToken() {
         return identifyingToken;
     }
 

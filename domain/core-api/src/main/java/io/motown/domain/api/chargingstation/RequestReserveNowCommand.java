@@ -35,11 +35,11 @@ public final class RequestReserveNowCommand {
 
     private final EvseId evseId;
 
-    private final IdentifyingToken identifyingToken;
+    private final String identifyingToken;
 
     private final Date expiryDate;
 
-    private final IdentifyingToken parentIdentifyingToken;
+    private final String parentIdentifyingToken;
 
     private final IdentityContext identityContext;
 
@@ -55,8 +55,8 @@ public final class RequestReserveNowCommand {
      * @throws NullPointerException if {@code chargingStationId}, {@code evseId}, {@code identifyingToken}, {@code expiryDate}
      *                               or {@code identityContext} is {@code null}.
      */
-    public RequestReserveNowCommand(ChargingStationId chargingStationId, EvseId evseId, IdentifyingToken identifyingToken, Date expiryDate,
-                                    @Nullable IdentifyingToken parentIdentifyingToken, IdentityContext identityContext) {
+    public RequestReserveNowCommand(ChargingStationId chargingStationId, EvseId evseId, String identifyingToken, Date expiryDate,
+                                    @Nullable String parentIdentifyingToken, IdentityContext identityContext) {
         this.chargingStationId = checkNotNull(chargingStationId);
         this.evseId = checkNotNull(evseId);
         this.identifyingToken = checkNotNull(identifyingToken);
@@ -88,7 +88,7 @@ public final class RequestReserveNowCommand {
      *
      * @return identifying token.
      */
-    public IdentifyingToken getIdentifyingToken() {
+    public String getIdentifyingToken() {
         return identifyingToken;
     }
 
@@ -107,7 +107,7 @@ public final class RequestReserveNowCommand {
      * @return parent identifying token.
      */
     @Nullable
-    public IdentifyingToken getParentIdentifyingToken() {
+    public String getParentIdentifyingToken() {
         return parentIdentifyingToken;
     }
 

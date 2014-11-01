@@ -137,7 +137,7 @@ public class DomainService {
 
         IdentityContext identityContext = new IdentityContext(addOnIdentity, new NullUserIdentity());
 
-        eventWaitingGateway.sendAndWaitForEvent(new AuthorizeCommand(chargingStationId, new TextualToken(idTag), identityContext), future, authorizationTimeoutInMillis);
+        eventWaitingGateway.sendAndWaitForEvent(new AuthorizeCommand(chargingStationId, idTag, identityContext), future, authorizationTimeoutInMillis);
     }
 
     public void receiveConfigurationItems(ChargingStationId chargingStationId, Set<ConfigurationItem> configurationItems, AddOnIdentity addOnIdentity) {
@@ -221,7 +221,7 @@ public class DomainService {
         authorize(chargingStationId, idTag.getToken(), futureEventCallback, addOnIdentity);
     }
 
-    public void stopTransaction(ChargingStationId chargingStationId, NumberedTransactionId transactionId, IdentifyingToken idTag, int meterValueStop, Date timeStamp,
+    public void stopTransaction(ChargingStationId chargingStationId, NumberedTransactionId transactionId, String idTag, int meterValueStop, Date timeStamp,
                                 List<MeterValue> meterValues, AddOnIdentity addOnIdentity) {
         this.checkChargingStationExistsAndIsRegisteredAndConfigured(chargingStationId);
 

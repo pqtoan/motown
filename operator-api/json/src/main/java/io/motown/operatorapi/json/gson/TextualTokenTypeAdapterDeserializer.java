@@ -16,7 +16,9 @@
 package io.motown.operatorapi.json.gson;
 
 import com.google.gson.*;
+
 import io.motown.domain.api.chargingstation.IdentifyingToken;
+import io.motown.domain.api.chargingstation.MainIdTagInfo;
 import io.motown.domain.api.chargingstation.TextualToken;
 import io.motown.utils.rest.json.gson.TypeAdapterDeserializer;
 
@@ -63,7 +65,9 @@ public class TextualTokenTypeAdapterDeserializer implements TypeAdapterDeseriali
             JsonPrimitive authenticationStatus = obj.getAsJsonPrimitive("status");
             if (authenticationStatus != null) {
                 String status = authenticationStatus.getAsString();
-                return new TextualToken(token, IdentifyingToken.AuthenticationStatus.valueOf(status));
+                MainIdTagInfo idTagInfo = new MainIdTagInfo();
+                idTagInfo.setStatus(MainIdTagInfo.AuthenticationStatus.valueOf(status));
+                return new TextualToken(token, idTagInfo);
             }
         } catch (ClassCastException | IllegalStateException e) {
             throw new JsonParseException("status must be a JSON string", e);

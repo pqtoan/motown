@@ -94,6 +94,7 @@ public class MotownCentralSystemService implements CentralSystemService {
                         AuthorizeResponse response = new AuthorizeResponse();
                         IdTagInfo tagInfo = new IdTagInfo();
                         tagInfo.setStatus(AuthorizationStatus.INVALID);
+                        tagInfo.setParentIdTag(value);
                         response.setIdTagInfo(tagInfo);
 
                         return response;
@@ -205,7 +206,7 @@ public class MotownCentralSystemService implements CentralSystemService {
         final ChargingStationId chargingStationId = new ChargingStationId(chargeBoxIdentity);
 
         StartTransactionInfo startTransactionInfo = new StartTransactionInfo(new EvseId(parameters.getConnectorId()),
-                parameters.getMeterStart(), parameters.getTimestamp(), new TextualToken(parameters.getIdTag()), Collections.<String, String>emptyMap());
+                parameters.getMeterStart(), parameters.getTimestamp(), parameters.getIdTag(), Collections.<String, String>emptyMap());
         final StartTransactionFutureEventCallback future = new StartTransactionFutureEventCallback(domainService,
                 chargingStationId, PROTOCOL_IDENTIFIER, startTransactionInfo, addOnIdentity);
 
@@ -250,7 +251,7 @@ public class MotownCentralSystemService implements CentralSystemService {
     public StopTransactionResponse stopTransaction(StopTransactionRequest request, String chargeBoxIdentity) {
         ChargingStationId chargingStationId = new ChargingStationId(chargeBoxIdentity);
         NumberedTransactionId transactionId = new NumberedTransactionId(chargingStationId, PROTOCOL_IDENTIFIER, request.getTransactionId());
-        IdentifyingToken identifyingToken = new TextualToken(request.getIdTag());
+        String identifyingToken = request.getIdTag();
 
         //OCPP 1.2 does not include the meter values in a stop transaction message
         List<MeterValue> meterValues = new ArrayList<>();
@@ -311,7 +312,7 @@ public class MotownCentralSystemService implements CentralSystemService {
             AuthorizeResponse response = new AuthorizeResponse();
             IdTagInfo tagInfo = new IdTagInfo();
             tagInfo.setStatus(convert(futureResponse.getStatus()));
-           // tagInfo.setParentIdTag(value);
+            tagInfo.setParentIdTag(value);
            // tagInfo.setExpiryDate(value);
             response.setIdTagInfo(tagInfo);
             return response;

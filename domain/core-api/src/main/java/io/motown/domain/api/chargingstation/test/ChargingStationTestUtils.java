@@ -250,7 +250,13 @@ public final class ChargingStationTestUtils {
     /**
      * The default identifying token, status INVALID.
      */
-    public static final IdentifyingToken IDENTIFYING_TOKEN_INVALID = new TextualToken(INVALID_TEXTUAL_TOKEN, IdentifyingToken.AuthenticationStatus.INVALID);
+    public  MainIdTagInfo idTagInfo = new MainIdTagInfo();
+    
+ 
+    idTagInfo.setStatus(io.motown.domain.api.chargingstation.MainIdTagInfo.AuthenticationStatus.INVALID);
+    
+   
+    public static final IdentifyingToken IDENTIFYING_TOKEN_INVALID = new TextualToken(INVALID_TEXTUAL_TOKEN, idTagInfo);
     /**
      * The default identifying token, status ACCEPTED.
      */

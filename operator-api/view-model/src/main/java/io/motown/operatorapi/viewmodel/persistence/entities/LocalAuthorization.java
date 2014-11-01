@@ -15,7 +15,10 @@
  */
 package io.motown.operatorapi.viewmodel.persistence.entities;
 
+import io.motown.domain.api.chargingstation.MainIdTagInfo.AuthenticationStatus;
+
 import javax.persistence.Embeddable;
+
 import java.util.Objects;
 
 @Embeddable
@@ -25,12 +28,12 @@ public class LocalAuthorization {
     
     private String parentToken;
 
-    private io.motown.domain.api.chargingstation.IdentifyingToken.AuthenticationStatus authenticationStatus;
+    private AuthenticationStatus authenticationStatus;
 
     public LocalAuthorization() {
     }
 
-    public LocalAuthorization(String token,String parentToken, io.motown.domain.api.chargingstation.IdentifyingToken.AuthenticationStatus authenticationStatus) {
+    public LocalAuthorization(String token,String parentToken, AuthenticationStatus authenticationStatus) {
         this.token = token;
         this.parentToken = parentToken;
         this.authenticationStatus = authenticationStatus;
@@ -52,13 +55,11 @@ public class LocalAuthorization {
         this.parentToken = parentToken;
     }
 
-    public io.motown.domain.api.chargingstation.IdentifyingToken.AuthenticationStatus getAuthenticationStatus() {
+    public AuthenticationStatus getAuthenticationStatus() {
         return authenticationStatus;
     }
 
-    public void setAuthenticationStatus(io.motown.domain.api.chargingstation.IdentifyingToken.AuthenticationStatus authenticationStatus) {
-        this.authenticationStatus = authenticationStatus;
-    }
+   
 
     @Override
     public int hashCode() {
@@ -76,4 +77,12 @@ public class LocalAuthorization {
         final LocalAuthorization other = (LocalAuthorization) obj;
         return Objects.equals(this.token, other.token);
     }
+
+	public void setAuthenticationStatus(AuthenticationStatus status) {
+		// TODO Auto-generated method stub
+		this.authenticationStatus = authenticationStatus;
+		
+	}
+
+	
 }

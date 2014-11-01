@@ -26,8 +26,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public final class TextualToken implements IdentifyingToken {
 
     private final String token;
+    
+    private final MainIdTagInfo idTagInfo;
 
-    private final AuthenticationStatus authenticationStatus;
+    //private final AuthenticationStatus authenticationStatus;
 
     /**
      * Create a {@code TextualToken} with a {@code String} based token.
@@ -47,10 +49,9 @@ public final class TextualToken implements IdentifyingToken {
      * @param status the authentication status
      * @throws NullPointerException     if {@code token} is null.
      */
-    public TextualToken(String token, @Nullable AuthenticationStatus status) {
-        checkNotNull(token);
+    public TextualToken(String token, MainIdTagInfo idTagInfo) {
         this.token = token;
-        this.authenticationStatus = status;
+        this.idTagInfo = idTagInfo;
     }
 
     /**
@@ -64,11 +65,8 @@ public final class TextualToken implements IdentifyingToken {
     /**
      * {@inheritDoc}
      */
-    @Override
-    @Nullable
-    public AuthenticationStatus getAuthenticationStatus() {
-        return authenticationStatus;
-    }
+   
+
 
     @Override
     public int hashCode() {
@@ -90,6 +88,12 @@ public final class TextualToken implements IdentifyingToken {
     public String toString() {
         return "item{" +
             "token='" + token + '\'' +
-            ", status='" + authenticationStatus + '\'' + '}';
+            ", status='" + idTagInfo.getStatus() + '\'' +
+            ", parentToken='" + idTagInfo.getParentIdTag() + '\'' + '}';
     }
+
+	@Override
+	public MainIdTagInfo getIdTagInfo() {
+		return  idTagInfo;
+	}
 }

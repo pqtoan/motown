@@ -34,11 +34,11 @@ public final class ReserveNowRequestedEvent implements CommunicationWithCharging
 
     private final EvseId evseId;
 
-    private final IdentifyingToken identifyingToken;
+    private final String identifyingToken;
 
     private final Date expiryDate;
 
-    private final IdentifyingToken parentIdentifyingToken;
+    private final String parentIdentifyingToken;
 
     private final IdentityContext identityContext;
 
@@ -55,8 +55,8 @@ public final class ReserveNowRequestedEvent implements CommunicationWithCharging
      * @throws NullPointerException if {@code chargingStationId}, {@code protocol}, {@code evseId}, {@code identifyingToken},
      *                              {@code expiryDate}, {@code parentIdentifyingToken} or {@code identityContext} is {@code null}.
      */
-    public ReserveNowRequestedEvent(ChargingStationId chargingStationId, String protocol, EvseId evseId, IdentifyingToken identifyingToken,
-                                    Date expiryDate, IdentifyingToken parentIdentifyingToken, IdentityContext identityContext) {
+    public ReserveNowRequestedEvent(ChargingStationId chargingStationId, String protocol, EvseId evseId, String identifyingToken,
+                                    Date expiryDate, String parentIdentifyingToken, IdentityContext identityContext) {
         this.chargingStationId = checkNotNull(chargingStationId);
         this.protocol = checkNotNull(protocol);
         this.evseId = checkNotNull(evseId);
@@ -99,7 +99,7 @@ public final class ReserveNowRequestedEvent implements CommunicationWithCharging
      *
      * @return identifying token.
      */
-    public IdentifyingToken getIdentifyingToken() {
+    public String getIdentifyingToken() {
         return identifyingToken;
     }
 
@@ -117,7 +117,7 @@ public final class ReserveNowRequestedEvent implements CommunicationWithCharging
      *
      * @return parent identifying token.
      */
-    public IdentifyingToken getParentIdentifyingToken() {
+    public String getParentIdentifyingToken() {
         return parentIdentifyingToken;
     }
 

@@ -31,7 +31,7 @@ public final class GrantAuthorizationCommand {
     @TargetAggregateIdentifier
     private final ChargingStationId chargingStationId;
 
-    private final IdentifyingToken identifyingToken;
+    private final String identifyingToken;
 
     private final IdentityContext identityContext;
 
@@ -43,7 +43,7 @@ public final class GrantAuthorizationCommand {
      * @param identityContext   identity context.
      * @throws NullPointerException if {@code chargingStationId}, {@code identifyingToken} or {@code identityContext} is {@code null}.
      */
-    public GrantAuthorizationCommand(ChargingStationId chargingStationId, IdentifyingToken identifyingToken, IdentityContext identityContext) {
+    public GrantAuthorizationCommand(ChargingStationId chargingStationId, String identifyingToken, IdentityContext identityContext) {
         this.chargingStationId = checkNotNull(chargingStationId);
         this.identifyingToken = checkNotNull(identifyingToken);
         this.identityContext = checkNotNull(identityContext);
@@ -63,7 +63,7 @@ public final class GrantAuthorizationCommand {
      *
      * @return the identification.
      */
-    public IdentifyingToken getIdentifyingToken() {
+    public String getIdentifyingToken() {
         return identifyingToken;
     }
 

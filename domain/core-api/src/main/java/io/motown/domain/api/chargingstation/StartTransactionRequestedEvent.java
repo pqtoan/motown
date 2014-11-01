@@ -31,7 +31,7 @@ public final class StartTransactionRequestedEvent implements CommunicationWithCh
 
     private final String protocol;
 
-    private final IdentifyingToken identifyingToken;
+    private final String identifyingToken;
 
     private final EvseId evseId;
 
@@ -48,7 +48,7 @@ public final class StartTransactionRequestedEvent implements CommunicationWithCh
      * @throws NullPointerException if {@code chargingStationId}, {@code protocol}, {@code identifyingToken}, {@code evseId}
      *                          or {@code identityContext} is {@code null}.
      */
-    public StartTransactionRequestedEvent(ChargingStationId chargingStationId, String protocol, IdentifyingToken identifyingToken, EvseId evseId, IdentityContext identityContext) {
+    public StartTransactionRequestedEvent(ChargingStationId chargingStationId, String protocol, String identifyingToken, EvseId evseId, IdentityContext identityContext) {
         this.chargingStationId = checkNotNull(chargingStationId);
         checkNotNull(protocol);
         checkArgument(!protocol.isEmpty());
@@ -79,7 +79,7 @@ public final class StartTransactionRequestedEvent implements CommunicationWithCh
      *
      * @return the token.
      */
-    public IdentifyingToken getIdentifyingToken() {
+    public String getIdentifyingToken() {
         return identifyingToken;
     }
 

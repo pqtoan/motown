@@ -29,13 +29,13 @@ public class AuthorizationResultEvent {
 
     private final ChargingStationId chargingStationId;
 
-    private final IdentifyingToken identifyingToken;
+    private final String identifyingToken;
 
     private final AuthorizationResultStatus authorizationResultStatus;
 
     private final IdentityContext identityContext;
 
-    private final IdentifyingToken parentIdentifyingToken;
+    private final String parentIdentifyingToken;
     /**
      * Creates a {@code AuthorizationResultEvent} with an identifier, identifier and result status.
      *
@@ -46,7 +46,7 @@ public class AuthorizationResultEvent {
      * @param identityContext           identity context.
      * @throws NullPointerException if {@code chargingStationId}, {@code idTag}, {@code authorizationResultStatus} or {@code identityContext} is {@code null}.
      */
-    public AuthorizationResultEvent(ChargingStationId chargingStationId, IdentifyingToken identifyingToken, AuthorizationResultStatus authorizationResultStatus, IdentifyingToken parentIdentifyingToken, IdentityContext identityContext) {
+    public AuthorizationResultEvent(ChargingStationId chargingStationId, String identifyingToken, AuthorizationResultStatus authorizationResultStatus, String parentIdentifyingToken, IdentityContext identityContext) {
         this.chargingStationId = checkNotNull(chargingStationId);
         this.identifyingToken = checkNotNull(identifyingToken);
         this.authorizationResultStatus = checkNotNull(authorizationResultStatus);
@@ -68,7 +68,7 @@ public class AuthorizationResultEvent {
      *
      * @return the identification.
      */
-    public IdentifyingToken getIdentifyingToken() {
+    public String getIdentifyingToken() {
         return identifyingToken;
     }
 
@@ -86,7 +86,7 @@ public class AuthorizationResultEvent {
      *
      * @return the parentIdentification.
      */
-    public IdentifyingToken getParentIdentifyingToken() {
+    public String getParentIdentifyingToken() {
         return parentIdentifyingToken;
     }
     

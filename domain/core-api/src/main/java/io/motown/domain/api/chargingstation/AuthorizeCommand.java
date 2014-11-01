@@ -32,7 +32,7 @@ public final class AuthorizeCommand {
     @TargetAggregateIdentifier
     private final ChargingStationId chargingStationId;
 
-    private final IdentifyingToken identifyingToken;
+    private final String identifyingToken;
 
     private final IdentityContext identityContext;
 
@@ -44,7 +44,7 @@ public final class AuthorizeCommand {
      * @param identityContext the identity context.
      * @throws NullPointerException if {@code chargingStationId}, {@code identifyingToken} or {@code identityContext} is {@code null}.
      */
-    public AuthorizeCommand(ChargingStationId chargingStationId, IdentifyingToken identifyingToken, IdentityContext identityContext) {
+    public AuthorizeCommand(ChargingStationId chargingStationId, String identifyingToken, IdentityContext identityContext) {
         this.chargingStationId = checkNotNull(chargingStationId);
         this.identifyingToken = checkNotNull(identifyingToken);
         this.identityContext = checkNotNull(identityContext);
@@ -64,7 +64,7 @@ public final class AuthorizeCommand {
      *
      * @return the identifier that needs to be authorized.
      */
-    public IdentifyingToken getIdentifyingToken() {
+    public String getIdentifyingToken() {
         return identifyingToken;
     }
 
